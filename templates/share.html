@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/player/dist/APlayer.min.css">
+</head>
+<style>
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+</style>
+<body>
+
+    <div class="container text-center">
+{% for dict_song in songs %} 
+    <p><a href="../static/file/{{dict_song["name"]}}">{{dict_song["name"]}}</a></p>
+{% endfor %}
+    </div>
+</body>
+</html>
