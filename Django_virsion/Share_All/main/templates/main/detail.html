@@ -1,0 +1,23 @@
+<style>
+    .container{
+    text-align: center
+    }
+    .center{
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    .center2{
+    text-align: center;
+    width: 100%;
+    height: 360px;
+    }
+</style>
+
+<ul class="container">
+{% for data in all_data %}
+    <li class="center"><a href="{{ data.url }}" target="_blank">{{ data.url }}</a></li>
+{% endfor %}
+<ul>
