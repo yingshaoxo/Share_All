@@ -17,7 +17,13 @@
 </style>
 
 <ul class="container">
+
+{% if all_data == None %}
+    <p class="center">Nothing yet.</p>
+{% endif %}
+
 {% for data in all_data %}
     <li class="center"><a href="{{ data.url }}" target="_blank">{{ data.url }}</a></li>
 {% endfor %}
+
 <ul>
