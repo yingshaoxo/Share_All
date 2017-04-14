@@ -5,10 +5,9 @@ from django.contrib.auth import authenticate
 
 from .forms import LoginForm
 
-from .models import User
 # Create your views here.
 def index(request):
-    user_list = User.objects.all()[:7]
+    user_list = UserAccount.objects.all()[:7]
     context = {
         'user_list': user_list,
         'title': [{'name': 'Share all', 'url': '/main/'}],
@@ -51,8 +50,11 @@ def login(request):
     return render(request, 'main/index.html', context)
 
 def detail(request, user_name):
-    user = get_object_or_404(User, user_name=user_name)
-    data = user.data_set.all()
+    user = get_object_or_404(UserAccount, username=user_name)
+    try:
+        data = user.data_set.all()
+    except:
+        data = None
     context = {
         'all_data': data,
         'title': [{'name': 'Share all', 'url': '/main/'}],

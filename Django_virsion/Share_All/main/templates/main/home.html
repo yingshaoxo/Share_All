@@ -21,7 +21,7 @@
 {% if user_list %}
     <ul class="container">
     {% for user in user_list %}
-        <li class="center"><a href="/main/{{ user.user_name }}/">{{ user.user_name }}</a></li>
+        <li class="center"><a href="/main/{{ user.username }}/">{{ user.username }}</a></li>
         <iframe class="center2" src='{{ user.data_set.all.0.url }}' frameborder=0></iframe>
     {% endfor %}
     </ul>
