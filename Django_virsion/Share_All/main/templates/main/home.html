@@ -18,11 +18,13 @@
 </style>
 
 <div>
+{% load static %}
 {% if user_list %}
     <ul class="container">
     {% for user in user_list %}
         <li class="center"><a href="/main/{{ user.username }}/">{{ user.username }}</a></li>
-        <iframe class="center2" src='{{ user.data_set.all.0.url }}' frameborder=0></iframe>
+        <iframe class="center2" src="{% static "/Shared_Page/"|add:user.username|add:".html" %}" frameborder=0></iframe>
+        <!--iframe class="center2" src='{{ user.data_set.all.0.url }}' frameborder=0></iframe-->
     {% endfor %}
     </ul>
 {% else %}

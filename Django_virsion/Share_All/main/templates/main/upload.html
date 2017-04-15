@@ -1,0 +1,19 @@
+<style>
+.container{
+    text-align: center;
+}
+.file{
+    margin-top: 50%;
+}
+</style>
+<div class="container">
+{% if error %}
+<p class="error"><strong>Error: </strong> {{ error }}
+{% endif %}
+<form action="/main/upload/" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <tr>
+    <td><input class="file" type=file name=file></td>
+    <td><input class="btn btn-primary" type=submit value=Upload></td>
+    <tr>
+</form>
+<div>

@@ -18,15 +18,15 @@
         <tr><td><input class="form-control" type="password" name="passwd" value=""></td></tr>
         <tr><td>
         <input class="btn btn-primary" type="submit" name="btn" value="Login">
-        <input class="btn btn-primary" type="submit" name="btn" value="Visit">
-      {% if error == 'unregistered' %}
         <input class="btn btn-primary" type="submit" name="btn" value="Register">
+      {% if error == 'unregistered' %}
+        <input class="btn btn-primary" type="submit" name="btn" value="Visit">
       {% endif %}
         </td></tr>
        </table>
       </form>
       {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}
+        <p class="error"><strong>Error: </strong> {{ error }}
       {% endif %}
     </div>
   </body>
