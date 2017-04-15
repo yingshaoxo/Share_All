@@ -6,16 +6,20 @@ from django.contrib.auth import login as account_login
 from django.contrib.auth import logout as account_logout
 
 from .forms import LoginForm, UploadFileForm
+import os
 
 # Create your views here.
 def index(request): 
     user_list = UserAccount.objects.all()[:7]
     context = {
         'user_list': user_list,
-        'munu': [{'name': 'Upload', 'url': 'upload'}, {'name': 'Manage', 'url': 'manage'}],
+        'munu': [{'name': 'Upload', 'url': 'upload'}, ],
         'redirect': None,
         'page_name': 'home'
         }
+    for num, user in enumerate(user_list, start=0):
+        if not os.path.isfile('Shared_Page' + '/' + user.username + '.html'):
+            user_list[num].delete()
     try:
         if request.GET['func'] == 'logout':
             account_logout(request)
@@ -59,40 +63,22 @@ def upload(request):
                 context['error'] = 'this file too big or we only support html.'
             else:
                 path = 'Shared_Page' 
-                import os
                 if not os.path.exists(path):
                     os.mkdir(path)
                 with open(path + '/' + user.username + '.html', 'wb') as destination:
                     for chunk in f.chunks():
                         destination.write(chunk)
 
-                with open(path + '/' + user.username + '.html', 'r') as f:
+                '''with open(path + '/' + user.username + '.html', 'r') as f:
                     text = f.read()
                 text = text.replace('A HREF="', 'A target="_blank" HREF="')
                 with open(path + '/' + user.username + '.html', 'w') as f:
-                    f.write(text)
-                
+                    f.write(text)'''
+
                 context['redirect'] = '..'
         else:
             context['error'] = 'please try again.'
 
-    return render(request, 'main/index.html', context)
-
-def manage(request):
-    context = {
-        'munu': [{'name': 'Back', 'url': '..'}],
-        'page_name': ''
-        }
-    if not request.user.is_authenticated:
-        context['page_name'] = 'login'
-    else:
-        context['page_name'] = 'manage'
-        user = get_object_or_404(UserAccount, username=request.user.username)
-        try:
-            data = user.data_set.all()
-        except:
-            data = None
-        context.update({'all_data': data})
     return render(request, 'main/index.html', context)
 
 def login(request):
@@ -109,11 +95,14 @@ def login(request):
             username = form.cleaned_data['username']
             passwd = form.cleaned_data['passwd']
             func = form.cleaned_data['btn']
+            if username.count(' ') > 0 or passwd.count(' ') > 0:
+                context['error'] = 'no space!'
+                return render(request, 'main/index.html', context)
 
             if func == 'Login':
                 user = authenticate(username=username, password=passwd)
                 if user is not None:
-                    context['redirect'] = '../manage/'
+                    context['redirect'] = '../upload/'
                 else:
                     context['error'] = 'password error.'
 
@@ -122,7 +111,7 @@ def login(request):
                     user = UserAccount.objects.create_user('Visitor', '', '1234')
                     user.save()
                 user = authenticate(username='Visitor', password='1234')
-                context['redirect'] = '../manage/'
+                context['redirect'] = '../upload/'
 
             elif func == 'Register':
                 user = authenticate(username=username, password=passwd)
@@ -130,7 +119,7 @@ def login(request):
                     user = UserAccount.objects.create_user(username, '', passwd)
                     user.save()
                     user = authenticate(username=username, password=passwd)
-                    context['redirect'] = '../manage/'
+                    context['redirect'] = '../upload/'
                 else:
                     context['error'] = 'this account already been used.'
 
