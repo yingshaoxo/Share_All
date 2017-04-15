@@ -10,16 +10,13 @@ import os
 
 # Create your views here.
 def index(request): 
-    user_list = UserAccount.objects.all()[:7]
+    user_list = UserAccount.objects.all().order_by('-id')[:7]
     context = {
         'user_list': user_list,
         'munu': [{'name': 'Upload', 'url': 'upload'}, ],
         'redirect': None,
         'page_name': 'home'
         }
-    for num, user in enumerate(user_list, start=0):
-        if not os.path.isfile('Shared_Page' + '/' + user.username + '.html'):
-            user_list[num].delete()
     try:
         if request.GET['func'] == 'logout':
             account_logout(request)
@@ -28,6 +25,10 @@ def index(request):
         print('')
     if request.user.is_authenticated:
         context['munu'].append({'name': 'Logout', 'url': '?func=logout'})
+        if request.user.username == 'yingshaoxo':
+            for num, user in enumerate(user_list, start=0):
+                if not os.path.isfile('Shared_Page' + '/' + user.username + '.html'):
+                    user_list[num].delete()
     return render(request, 'main/index.html', context)
 
 def detail(request, user_name):
@@ -122,7 +123,9 @@ def login(request):
                     context['redirect'] = '../upload/'
                 else:
                     context['error'] = 'this account already been used.'
-
+        else:
+            context['error'] = 'try again.'
+            return render(request, 'main/index.html', context)
     account_login(request, user)
     return render(request, 'main/index.html', context)
 

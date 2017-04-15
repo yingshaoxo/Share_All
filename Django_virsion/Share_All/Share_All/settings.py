@@ -25,7 +25,7 @@ SECRET_KEY = 'e8@(pw8(y$1#&con5a2rb_v(53_24=z%5+_i7quot5#my+p#@u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.101']
+ALLOWED_HOSTS = ['192.168.1.101', 'yingshaoxo.cf', '45.63.90.169']
 
 
 # Application definition
