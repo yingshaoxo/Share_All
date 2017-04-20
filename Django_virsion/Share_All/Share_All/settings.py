@@ -118,8 +118,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/main/static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
+    #static, js ,css, etc.
+    ('static', os.path.join(BASE_DIR, 'static/static')),
     #upload
-    ('Shared_Page', os.path.join(BASE_DIR, 'Shared_Page')),
+    ('bookmarks', os.path.join(BASE_DIR, 'static/bookmarks')),
     ]

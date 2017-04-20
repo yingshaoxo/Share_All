@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, get_list_or_404, render
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from django.contrib.auth.models import User as UserAccount
 from django.contrib.auth import authenticate
@@ -10,9 +11,10 @@ import os
 
 # Create your views here.
 def index(request): 
-    user_list = UserAccount.objects.all().order_by('-id')[:7]
+    real_user_list = UserAccount.objects.all().order_by('-id')[:7]
+    user_list = [user.username for user in real_user_list]
     context = {
-        'user_list': user_list,
+        'user_list': None,
         'munu': [{'name': 'Upload', 'url': 'upload'}, ],
         'redirect': None,
         'page_name': 'home'
@@ -22,13 +24,16 @@ def index(request):
             account_logout(request)
             context['redirect'] = '.'
     except:
-        print('')
+        fuck = 'fuck'
     if request.user.is_authenticated:
         context['munu'].append({'name': 'Logout', 'url': '?func=logout'})
-        if request.user.username == 'yingshaoxo':
-            for num, user in enumerate(user_list, start=0):
-                if not os.path.isfile('Shared_Page' + '/' + user.username + '.html'):
-                    user_list[num].delete()
+    for num, user in enumerate(real_user_list, start=0):
+        if not os.path.isfile('static/bookmarks' + '/' + user.username + '.html'):
+            if request.user.username == 'yingshaoxo':
+                real_user_list[num].delete()
+                os.remove('static/bookmarks/' + real_user_list[num].username + '.html')
+            del user_list[num]
+    context['user_list'] = user_list
     return render(request, 'main/index.html', context)
 
 def detail(request, user_name):
@@ -63,7 +68,7 @@ def upload(request):
             if f._size > 5242880 or 'text/html' != f.content_type:
                 context['error'] = 'this file too big or we only support html.'
             else:
-                path = 'Shared_Page' 
+                path = 'static/bookmarks' 
                 if not os.path.exists(path):
                     os.mkdir(path)
                 with open(path + '/' + user.username + '.html', 'wb') as destination:
@@ -103,6 +108,7 @@ def login(request):
             if func == 'Login':
                 user = authenticate(username=username, password=passwd)
                 if user is not None:
+                    account_login(request, user)
                     context['redirect'] = '../upload/'
                 else:
                     context['error'] = 'password error.'
@@ -112,6 +118,7 @@ def login(request):
                     user = UserAccount.objects.create_user('Visitor', '', '1234')
                     user.save()
                 user = authenticate(username='Visitor', password='1234')
+                account_login(request, user)
                 context['redirect'] = '../upload/'
 
             elif func == 'Register':
@@ -120,12 +127,13 @@ def login(request):
                     user = UserAccount.objects.create_user(username, '', passwd)
                     user.save()
                     user = authenticate(username=username, password=passwd)
+                    account_login(request, user)
                     context['redirect'] = '../upload/'
                 else:
                     context['error'] = 'this account already been used.'
         else:
             context['error'] = 'try again.'
             return render(request, 'main/index.html', context)
-    account_login(request, user)
+
     return render(request, 'main/index.html', context)
 

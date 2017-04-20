@@ -3,6 +3,12 @@
         "file": [
             {
                 "name": "\u9ad8\u4e2d\u6210\u8bed.txt"
+            },
+            {
+                "name": "do.sh"
+            },
+            {
+                "name": "install.sh"
             }
         ],
         "music": [],
