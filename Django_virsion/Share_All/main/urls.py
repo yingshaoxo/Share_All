@@ -8,3 +8,4 @@ urlpatterns = [
     url(r'^upload/$', views.upload, name='upload'),
     url(r'^(?P<user_name>[A-Za-z0-9]+)/$', views.detail, name='detail'),
 ]
+

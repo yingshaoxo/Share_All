@@ -27,9 +27,9 @@
         {% if forloop.counter > 1 %}
             <br><br><br>
         {% endif %}
-            <li class="list-group-item center"><a href="{% static "/bookmarks/"|add:user|add:".html" %}" target="_blank">{{ user }}</a></li>
+            <li class="list-group-item center"><a href="{% static "bookmarks/"|add:user|add:".html" %}" target="_blank">{{ user }}</a></li>
             <br>
-            <iframe class="center2" src="{% static "/bookmarks/"|add:user|add:".html" %}" frameborder=0></iframe>
+            <iframe class="center2" src="{% static "bookmarks/"|add:user|add:".html" %}" frameborder=0></iframe>
     {% endfor %}
 
 </ul>

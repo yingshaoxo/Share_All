@@ -121,7 +121,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     #static, js ,css, etc.
-    ('static', os.path.join(BASE_DIR, 'static/static')),
+    ('static' , os.path.join(BASE_DIR, 'static/static')),
     #upload
-    ('bookmarks', os.path.join(BASE_DIR, 'static/bookmarks')),
+    ('bookmarks' , os.path.join(BASE_DIR, 'static/bookmarks')),
     ]
