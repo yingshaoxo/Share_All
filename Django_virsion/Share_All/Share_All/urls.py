@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]
 
+
 handler404 = 'views.index'
 handler500 = 'views.index'

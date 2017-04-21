@@ -4,7 +4,7 @@ from django.http import HttpResponse
 def index(request):
     html = '''
     <script>
-    window.location="http://yingshaoxo.cf"
+    window.location="http://yingshaoxo.github.io"
     </script>
     '''
     return HttpResponse(html)

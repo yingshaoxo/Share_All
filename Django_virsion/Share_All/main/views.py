@@ -6,10 +6,36 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as account_login
 from django.contrib.auth import logout as account_logout
 
+
 from .forms import LoginForm, UploadFileForm
+from django.contrib import messages
+from functools import wraps
+import requests
 import os
 
+BOOKMARKS_PATH = 'static/bookmarks'
+
 # Create your views here.
+def check_recaptcha(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        request.recaptcha_is_valid = None
+        if request.method == 'POST':
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            data = {
+                'secret': '6LcWDB4UAAAAAE2kgwBxVRAUOC6OZZqZguFd2pHD',
+                'response': recaptcha_response
+           }
+            r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+            result = r.json()
+            if result['success']:
+                request.recaptcha_is_valid = True
+            else:
+                request.recaptcha_is_valid = False
+                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
+
 def index(request): 
     real_user_list = UserAccount.objects.all().order_by('-id')[:7]
     user_list = [user.username for user in real_user_list]
@@ -28,10 +54,10 @@ def index(request):
     if request.user.is_authenticated:
         context['munu'].append({'name': 'Logout', 'url': '?func=logout'})
     for num, user in enumerate(real_user_list, start=0):
-        if not os.path.isfile('static/bookmarks' + '/' + user.username + '.html'):
+        if not os.path.isfile(BOOKMARKS_PATH + '/' + user.username + '.html'):
             if request.user.username == 'yingshaoxo':
                 real_user_list[num].delete()
-                os.remove('static/bookmarks/' + real_user_list[num].username + '.html')
+                os.remove(BOOKMARKS_PATH + '/' + real_user_list[num].username + '.html')
             del user_list[num]
     context['user_list'] = user_list
     return render(request, 'main/index.html', context)
@@ -68,7 +94,7 @@ def upload(request):
             if f._size > 5242880 or 'text/html' != f.content_type:
                 context['error'] = 'this file too big or we only support html.'
             else:
-                path = 'static/bookmarks' 
+                path = BOOKMARKS_PATH 
                 if not os.path.exists(path):
                     os.mkdir(path)
                 with open(path + '/' + user.username + '.html', 'wb') as destination:
@@ -87,6 +113,7 @@ def upload(request):
 
     return render(request, 'main/index.html', context)
 
+@check_recaptcha
 def login(request):
     context = {
         'munu': [{'name': 'Back', 'url': '..'}],
@@ -97,7 +124,7 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
-        if form.is_valid():
+        if form.is_valid() and request.recaptcha_is_valid:
             username = form.cleaned_data['username']
             passwd = form.cleaned_data['passwd']
             func = form.cleaned_data['btn']

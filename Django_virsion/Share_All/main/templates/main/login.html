@@ -9,6 +9,10 @@
      margin-left: auto;
      margin-right: auto;
    }
+    .g-recaptcha div { 
+     margin-left: auto; 
+     margin-right: auto;
+   }
   </style>
   <body>
     <div class="container">
@@ -17,6 +21,8 @@
         <tr><td><input class="form-control" type="text" name="username" value=""></td></tr>
         <tr><td><input class="form-control" type="password" name="passwd" value=""></td></tr>
         <tr><td>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <div class="g-recaptcha" data-sitekey="6LcWDB4UAAAAABJYqbspMxi51TcMxexMeIY2yPei"></div>
         <input class="btn btn-primary" type="submit" name="btn" value="Login">
         <input class="btn btn-primary" type="submit" name="btn" value="Register">
       {% if error == 'unregistered' %}
