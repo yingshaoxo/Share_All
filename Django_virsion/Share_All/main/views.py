@@ -37,7 +37,7 @@ def check_recaptcha(view_func):
     return _wrapped_view
 
 def index(request): 
-    real_user_list = UserAccount.objects.all().order_by('-id')[:7]
+    real_user_list = UserAccount.objects.all().order_by('-last_login')[:7]
     user_list = [user.username for user in real_user_list]
     context = {
         'user_list': None,
