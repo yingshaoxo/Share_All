@@ -1,0 +1,17 @@
+<style>
+.container{
+    text-align: center;
+}
+.file{
+    margin-top: 40%;
+}
+</style>
+
+<div class="container">
+<form action="/upload/upload/" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <tr>
+    <td><input class="file container" type=file name=file></td>
+    <td><input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type=submit value=Upload></td>
+    <tr>
+</form>
+<div>

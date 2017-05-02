@@ -7,3 +7,6 @@ def index(request):
     </script>
     '''
     return HttpResponse(html)
+
+
+

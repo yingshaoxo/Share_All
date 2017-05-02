@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['192.168.1.101', 'yingshaoxo.cf', '45.63.90.169']
 
 INSTALLED_APPS = [
     'main.apps.MainConfig',
+    'upload.apps.UploadConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
