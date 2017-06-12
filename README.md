@@ -1,1 +1,1 @@
-# This is a place for sharing.
+# This is a sharing place built by Django.
