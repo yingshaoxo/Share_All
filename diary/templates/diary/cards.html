@@ -2,9 +2,10 @@
 <style>
 .demo-card-square.mdl-card {
   width: 100%;
-  height: 320px;
+  height: auto;
 }
 .demo-card-square > .mdl-card__title {
+  align-items: flex-start;
   color: #fff;
   background:
     bottom right 15% no-repeat #46B6AC;
@@ -23,12 +24,12 @@
           <h2 class="mdl-card__title-text">{{ item.time }}</h2>
         </div>
         <div class="mdl-card__supporting-text">
-        {{ item.text }}
+        {{ item.text|linebreaks }}
         </div>
-        <div class="mdl-card__actions mdl-card--border">
-          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        <div class="mdl-card__actions"><!-- mdl-card--border-->
+          <!--a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
             View Details
-          </a>
+          </a-->
         </div>
       </div>
   {% endfor %}

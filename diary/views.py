@@ -10,4 +10,4 @@ def index(request):
         }
     years, content = handle.get_content()
     context.update({'years': years, 'content': content})
-    return render(request, 'index.html', context)
+    return render(request, 'diary/index.html', context)

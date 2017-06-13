@@ -60,7 +60,7 @@ def index(request):
                 os.remove(BOOKMARKS_PATH + '/' + real_user_list[num].username + '.html')
             del user_list[num]
     context['user_list'] = user_list
-    return render(request, 'index.html', context)
+    return render(request, 'bookmark/index.html', context)
 
 def detail(request, user_name):
     user = get_object_or_404(UserAccount, username=user_name)
@@ -73,7 +73,7 @@ def detail(request, user_name):
         'munu': [{'name': 'Back', 'url': '..'}],
         'page_name': 'detail'
         }
-    return render(request, 'index.html', context)
+    return render(request, 'bookmark/index.html', context)
 
 def upload(request):
     context = {
@@ -101,19 +101,19 @@ def upload(request):
                     for chunk in f.chunks():
                         destination.write(chunk)
 
-                '''with open(path + '/' + user.username + '.html', 'r') as f:
+                with open(path + '/' + user.username + '.html', 'r') as f:
                     text = f.read()
                 text = text.replace('A HREF="', 'A target="_blank" HREF="')
                 with open(path + '/' + user.username + '.html', 'w') as f:
-                    f.write(text)'''
+                    f.write(text)
 
                 context['redirect'] = '..'
         else:
             context['error'] = 'please try again.'
 
-    return render(request, 'index.html', context)
+    return render(request, 'bookmark/index.html', context)
 
-@check_recaptcha
+#@check_recaptcha
 def login(request):
     context = {
         'munu': [{'name': 'Back', 'url': '..'}],
@@ -124,13 +124,13 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
-        if form.is_valid() and request.recaptcha_is_valid:
+        if form.is_valid():# and request.recaptcha_is_valid:
             username = form.cleaned_data['username']
             passwd = form.cleaned_data['passwd']
             func = form.cleaned_data['btn']
             if username.count(' ') > 0 or passwd.count(' ') > 0:
                 context['error'] = 'no space!'
-                return render(request, 'index.html', context)
+                return render(request, 'bookmark/index.html', context)
 
             if func == 'Login':
                 user = authenticate(username=username, password=passwd)
@@ -160,7 +160,7 @@ def login(request):
                     context['error'] = 'this account already been used.'
         else:
             context['error'] = 'try again.'
-            return render(request, 'index.html', context)
+            return render(request, 'bookmark/index.html', context)
 
-    return render(request, 'index.html', context)
+    return render(request, 'bookmark/index.html', context)
 
