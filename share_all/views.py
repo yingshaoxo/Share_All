@@ -1,18 +1,19 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+
+import random
 
 
 def get_all_app_url(request):
     from django.conf import settings
-    host = request.build_absolute_uri('/') # request.get_host()
-    app_urls = [host + name.split('.')[0] for name in settings.INSTALLED_APPS[:-7]]
+    # host = request.build_absolute_uri('/') # request.get_host()
+    app_urls = [name.split('.')[0] for name in settings.INSTALLED_APPS[:-8]]
     return app_urls
  
 # Create your views here.
 def index(request):
-    html = '''
-    <script>
-    window.location="bookmark"
-    </script>
-    '''
-    #html = str(get_all_app_url(request))
-    return HttpResponse(html)
+    colors = ['normal', 'success', 'info', 'warning', 'danger']
+    urls = get_all_app_url(request)
+    items = []
+    for url in urls:
+        items.append({'color': random.choice(colors), 'url': url})
+    return render(request, 'main/index.html', context={'items': items})
