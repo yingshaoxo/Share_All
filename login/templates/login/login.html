@@ -1,0 +1,45 @@
+{% if redirect %}
+    <script>
+    window.location = "{{ redirect }}"
+    </script>
+{% endif %}
+
+<style>
+  .container{
+   text-align: center
+ }
+  .center{
+   text-align: center;
+   margin-top: 40%;
+   margin-bottom: 50%;
+   margin-left: auto;
+   margin-right: auto;
+ }
+  .g-recaptcha div { 
+   margin-left: auto; 
+   margin-right: auto;
+ }
+</style>
+
+<body>
+  <div class="container">
+    <form action="/login/" method="post">{% csrf_token %}
+     <table class="container center">
+      <tr><td><input class="form-control" type="text" name="username" value=""></td></tr>
+      <tr><td><input class="form-control" type="password" name="passwd" value=""></td></tr>
+      <tr><td>
+      <script src='https://www.google.com/recaptcha/api.js'></script>
+      <div class="g-recaptcha" data-sitekey="6LcWDB4UAAAAABJYqbspMxi51TcMxexMeIY2yPei"></div>
+      <input class="btn btn-primary" type="submit" name="btn" value="Login">
+      <input class="btn btn-primary" type="submit" name="btn" value="Register">
+    {% if error == 'unregistered' %}
+      <input class="btn btn-primary" type="submit" name="btn" value="Visit">
+    {% endif %}
+      </td></tr>
+     </table>
+    </form>
+    {% if error %}
+      <p class="error"><strong>Error: </strong> {{ error }}
+    {% endif %}
+  </div>
+</body>

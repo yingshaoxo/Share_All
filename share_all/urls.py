@@ -21,6 +21,7 @@ from . import views
 urlpatterns = [
     url(r'^diary/', include('diary.urls')),
     url(r'^bookmark/', include('bookmark.urls')),
+    url(r'^login/', include('login.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
 ]
