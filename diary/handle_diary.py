@@ -25,4 +25,6 @@ def get_content():
         years.append(lines[0][:4])
     years = list(set(years))
     years.sort()
+
+    content.reverse()
     return years, content
