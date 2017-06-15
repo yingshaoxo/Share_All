@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'diary.apps.DiaryConfig',
     'bookmark.apps.BookmarkConfig',
     'login.apps.LoginConfig',
-    'proxy.apps.ProxyConfig',
     'share_all.apps.Share_allConfig',
     'django.contrib.admin',
     'django.contrib.auth',
