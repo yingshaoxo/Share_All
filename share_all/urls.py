@@ -19,9 +19,11 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
+    url(r'^blog/', include('blog.urls')),
     url(r'^diary/', include('diary.urls')),
     url(r'^bookmark/', include('bookmark.urls')),
     url(r'^login/', include('login.urls')),
+    url(r'^proxy/', include('proxy.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
 ]

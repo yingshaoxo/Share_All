@@ -31,9 +31,11 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'blog.apps.BlogConfig',
     'diary.apps.DiaryConfig',
     'bookmark.apps.BookmarkConfig',
     'login.apps.LoginConfig',
+    'proxy.apps.ProxyConfig',
     'share_all.apps.Share_allConfig',
     'django.contrib.admin',
     'django.contrib.auth',
