@@ -9,7 +9,7 @@ from django.contrib.auth import logout as account_logout
 from .forms import LoginForm
 from django.contrib import messages
 from functools import wraps
-import requests
+# import requests
 import os
 
 BOOKMARKS_PATH = 'static/bookmarks'
