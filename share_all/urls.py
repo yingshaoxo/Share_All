@@ -19,6 +19,7 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
+    url(r'^local_server/', include('local_server.urls')),
     url(r'^diary/', include('diary.urls')),
     url(r'^bookmark/', include('bookmark.urls')),
     url(r'^login/', include('login.urls')),

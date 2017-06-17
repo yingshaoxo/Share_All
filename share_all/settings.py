@@ -25,12 +25,13 @@ SECRET_KEY = 'ol2nd9grsc=abssul#zj7-+zsvs1!kk@yd-vh-jpop2!8my%(6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'yingshaoxo.cf', '.ngrok.io']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'local_server.apps.LocalServerConfig',
     'diary.apps.DiaryConfig',
     'bookmark.apps.BookmarkConfig',
     'login.apps.LoginConfig',
