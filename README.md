@@ -2,8 +2,8 @@
 
 ___
 
-local_server is for local server forwarding. (you need this tool to make it work: https://github.com/yingshaoxo/ngrok-tool)
+`local_server` is for local server forwarding. (you need [ngrok-tool](https://github.com/yingshaoxo/ngrok-tool) to make it work)
 
-diary is for txt showing
+`diary` is for txt showing.
 
-bookmark is for bookmarks sharing
+`bookmark` is for bookmarks sharing.
