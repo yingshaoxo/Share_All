@@ -7,3 +7,15 @@ ___
 `diary` is for txt showing.
 
 `bookmark` is for bookmarks sharing.
+
+___
+
+usage: `python3 manage.py runserver`
+
+___
+
+![1](screenshot/1.png)
+
+![2](screenshot/2.png)
+
+![3](screenshot/3.png)
